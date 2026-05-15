@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --color-parchment: #f4efe6;
+  --color-ink: #1a1714;
+  --color-rust: #8b3a1f;
+  --color-faded: #6b6359;
+  --color-card: #faf6ee;
+  --color-rule: #d9cfbe;
+
+  --font-display: "EB Garamond", "Times New Roman", serif;
+  --font-body: "EB Garamond", "Times New Roman", serif;
+  --font-meta: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html,
+body {
+  background: var(--color-parchment);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-feature-settings: "kern", "liga", "onum";
+  text-rendering: optimizeLegibility;
+}
+
+.meta {
+  font-family: var(--font-meta);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-faded);
+}
+
+.rule {
+  border-top: 1px solid var(--color-rule);
+}
+
+.museum-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-rule);
+  box-shadow: 0 1px 0 rgba(26, 23, 20, 0.04);
+}
