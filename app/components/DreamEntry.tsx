@@ -1,5 +1,6 @@
 import type { Dream } from "@/lib/db/types";
 import { SignatureBadge } from "./SignatureBadge";
+import { CopyPermalink } from "./CopyPermalink";
 
 interface Props {
   dream: Dream;
@@ -31,10 +32,13 @@ export function DreamEntry({ dream, catalogueNo }: Props) {
   return (
     <article className="mx-auto max-w-6xl px-5 py-10 md:px-6 md:py-14 lg:py-20 xl:max-w-7xl">
       <header className="mb-10 border-b border-rule pb-8 md:mb-14">
-        <p className="meta tnum">
-          Catalogue · {String(catalogueNo ?? 0).padStart(4, "0")} · Accessioned{" "}
-          {fmtDate(dream.created_at)}
-        </p>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <p className="meta tnum">
+            Catalogue · {String(catalogueNo ?? 0).padStart(4, "0")} · Accessioned{" "}
+            {fmtDate(dream.created_at)}
+          </p>
+          <CopyPermalink slug={dream.slug} />
+        </div>
         <h1 className="mt-4 font-serif text-h1 tracking-tight lg:text-[2.75rem]">
           {dream.fragment}
         </h1>
