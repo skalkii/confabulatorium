@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "seed": "node --env-file=.env.local --import tsx scripts/seed.ts"
+    "seed": "node --env-file=.env.local --import tsx scripts/seed.ts",
+    "seed:backfill": "node --env-file=.env.local --import tsx scripts/backfill-signatures.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
