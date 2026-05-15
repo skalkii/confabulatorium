@@ -23,21 +23,19 @@ export default async function ArchivePage({ searchParams }: PageProps) {
     : [];
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-16">
-      <header className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <main className="mx-auto max-w-5xl px-5 py-12 md:px-6 md:py-16">
+      <header className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-8">
         <div>
           <p className="meta">Confabulatorium · Archive</p>
-          <h1 className="mt-2 font-serif text-4xl tracking-tight">
+          <h1 className="mt-2 font-serif text-h1 tracking-tight lg:text-[2.75rem]">
             All entries the archive has dreamed.
           </h1>
         </div>
-        <nav className="meta flex gap-4">
+        <nav className="meta flex gap-4 md:gap-5" aria-label="Sort archive">
           <Link
             href="/archive?sort=recent"
             className={
-              sort === "recent"
-                ? "text-[color:var(--color-rust)]"
-                : "hover:text-[color:var(--color-rust)]"
+              sort === "recent" ? "text-rust" : "hover:text-rust"
             }
           >
             Most recent
@@ -45,9 +43,7 @@ export default async function ArchivePage({ searchParams }: PageProps) {
           <Link
             href="/archive?sort=signature"
             className={
-              sort === "signature"
-                ? "text-[color:var(--color-rust)]"
-                : "hover:text-[color:var(--color-rust)]"
+              sort === "signature" ? "text-rust" : "hover:text-rust"
             }
           >
             Deepest dreams
@@ -56,15 +52,15 @@ export default async function ArchivePage({ searchParams }: PageProps) {
       </header>
 
       {dreams.length === 0 ? (
-        <p className="italic text-[color:var(--color-faded)]">
+        <p className="italic text-faded">
           The archive is empty. Be the first to{" "}
-          <Link href="/dream/new" className="underline">
+          <Link href="/dream/new" className="underline decoration-rule underline-offset-4 hover:text-rust">
             submit a fragment
           </Link>
           .
         </p>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
           {dreams.map((d, i) => (
             <DreamCard
               key={d.slug}

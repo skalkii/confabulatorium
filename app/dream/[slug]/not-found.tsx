@@ -2,25 +2,25 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="mx-auto max-w-2xl px-6 py-24">
+    <main className="mx-auto max-w-2xl px-5 py-20 md:px-6 md:py-24">
       <p className="meta mb-6">Confabulatorium · 404</p>
-      <h1 className="font-serif text-4xl tracking-tight">
+      <h1 className="font-serif text-h1 tracking-tight lg:text-[2.75rem]">
         No such dream is in the archive.
       </h1>
-      <p className="mt-4 text-lg italic text-[color:var(--color-faded)]">
+      <p className="mt-4 text-body italic text-faded">
         The catalogue card you sought is either filed elsewhere, awaiting
         review, or was never written.
       </p>
-      <div className="mt-10 flex gap-4">
+      <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:gap-4">
         <Link
           href="/dream/new"
-          className="meta border border-[color:var(--color-ink)] bg-[color:var(--color-ink)] px-5 py-3 text-[color:var(--color-parchment)] hover:bg-[color:var(--color-rust)] hover:border-[color:var(--color-rust)]"
+          className="meta border border-ink bg-ink px-5 py-3 text-center text-parchment hover:border-rust hover:bg-rust"
         >
           Submit a fragment
         </Link>
         <Link
           href="/archive"
-          className="meta border border-[color:var(--color-rule)] px-5 py-3 hover:border-[color:var(--color-ink)]"
+          className="meta border border-rule px-5 py-3 text-center hover:border-ink"
         >
           Browse the archive
         </Link>

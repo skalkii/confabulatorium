@@ -6,13 +6,13 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto max-w-2xl px-6 py-20">
+    <main className="mx-auto max-w-2xl px-5 py-14 md:px-6 md:py-20">
       <p className="meta mb-6">Confabulatorium · About</p>
-      <h1 className="font-serif text-4xl leading-tight tracking-tight">
+      <h1 className="font-serif text-h1 tracking-tight lg:text-[2.75rem]">
         Why this archive exists.
       </h1>
 
-      <article className="prose prose-stone mt-12 space-y-6 font-serif text-lg leading-[1.75]">
+      <article className="prose-confab mt-10 space-y-6 font-serif text-body leading-[1.75] md:mt-14 lg:text-[1.1875rem]">
         <p>
           The standard framing of a large language model that hallucinates
           treats the event as failure. The system was meant to retrieve a
@@ -136,9 +136,9 @@ export default function AboutPage() {
         </p>
       </article>
 
-      <section className="mt-16 border-t border-[color:var(--color-rule)] pt-8">
+      <section className="mt-16 border-t border-rule pt-8">
         <p className="meta mb-4">Further reading</p>
-        <ul className="space-y-2 text-sm leading-relaxed">
+        <ul className="space-y-2 text-small leading-relaxed">
           <li>Hoel, E. (2021). <em>The overfitted brain.</em></li>
           <li>Thompson, E. (2014). <em>Waking, Dreaming, Being.</em></li>
           <li>Clark, A. <em>Surfing Uncertainty.</em></li>
