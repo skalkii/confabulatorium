@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { DreamCard } from "@/app/components/DreamCard";
 import { listArchive } from "@/lib/db/dreams";
 import { hasSupabase } from "@/lib/env";

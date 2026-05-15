@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { Mark } from "./Mark";
 import { ThemeToggle } from "./ThemeToggle";
 

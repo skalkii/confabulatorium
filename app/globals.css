@@ -2,6 +2,21 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Cross-page fade via View Transitions API. next-view-transitions
+   wraps Link clicks in document.startViewTransition. We override
+   the default 250ms swap with a short tasteful fade. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
 /* ============================================================
    Design tokens — Tailwind v4 @theme
    Every token here becomes a utility (text-ink, bg-parchment, etc.)
@@ -141,6 +156,22 @@ p {
 ::selection {
   background: var(--color-rust);
   color: var(--color-parchment);
+}
+
+/* Focus-visible — rust ring with parchment-coloured offset so the
+   ring reads against both surfaces and ink alike. Applied broadly
+   to every interactive element; mouse clicks don't trigger it
+   (only :focus-visible). */
+a:focus-visible,
+button:focus-visible,
+textarea:focus-visible,
+input:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible {
+  outline: 2px solid var(--color-rust);
+  outline-offset: 2px;
+  border-radius: 1px;
 }
 
 /* ============================================================
