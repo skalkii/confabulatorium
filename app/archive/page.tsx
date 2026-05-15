@@ -23,7 +23,7 @@ export default async function ArchivePage({ searchParams }: PageProps) {
     : [];
 
   return (
-    <main className="mx-auto max-w-5xl px-5 py-12 md:px-6 md:py-16">
+    <main className="mx-auto max-w-6xl px-5 py-12 md:px-6 md:py-16 xl:max-w-7xl">
       <header className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-8">
         <div>
           <p className="meta">Confabulatorium · Archive</p>
@@ -60,7 +60,7 @@ export default async function ArchivePage({ searchParams }: PageProps) {
           .
         </p>
       ) : (
-        <div className="grid gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
           {dreams.map((d, i) => (
             <DreamCard
               key={d.slug}

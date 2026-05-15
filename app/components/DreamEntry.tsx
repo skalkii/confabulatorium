@@ -29,7 +29,7 @@ export function DreamEntry({ dream, catalogueNo }: Props) {
   const snippets = dream.search_snippets ?? [];
 
   return (
-    <article className="mx-auto max-w-6xl px-5 py-10 md:px-6 md:py-14 lg:py-20">
+    <article className="mx-auto max-w-6xl px-5 py-10 md:px-6 md:py-14 lg:py-20 xl:max-w-7xl">
       <header className="mb-10 border-b border-rule pb-8 md:mb-14">
         <p className="meta tnum">
           Catalogue · {String(catalogueNo ?? 0).padStart(4, "0")} · Accessioned{" "}

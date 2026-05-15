@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SiteNav } from "./components/SiteNav";
+import { ThemeProvider } from "./components/ThemeProvider";
+import { Mark } from "./components/Mark";
 import { serif, mono } from "./fonts";
 
 export const metadata: Metadata = {
@@ -26,15 +28,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${serif.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`${serif.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
       <body className="min-h-screen antialiased">
-        <SiteNav />
-        {children}
-        <footer className="mx-auto mt-20 max-w-5xl border-t border-rule px-5 py-8 md:mt-28 md:px-6 md:py-10">
-          <p className="meta">
-            Confabulatorium · an archive of what the machine remembers that never happened
-          </p>
-        </footer>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SiteNav />
+          {children}
+          <footer className="mx-auto mt-20 flex max-w-6xl flex-col gap-3 border-t border-rule px-5 py-8 md:mt-28 md:flex-row md:items-center md:justify-between md:px-6 md:py-10 xl:max-w-7xl">
+            <div className="flex items-center gap-3 text-faded">
+              <Mark size={20} />
+              <p className="meta">
+                Confabulatorium · an archive of what the machine remembers that never happened
+              </p>
+            </div>
+            <p className="meta">est. 2026</p>
+          </footer>
+        </ThemeProvider>
       </body>
     </html>
   );

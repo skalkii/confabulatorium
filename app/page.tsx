@@ -20,7 +20,7 @@ export default async function LandingPage() {
   const hero = await getHeroDreams();
 
   return (
-    <main className="mx-auto max-w-5xl px-5 py-14 md:px-6 md:py-20 lg:py-24">
+    <main className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-20 lg:py-24 xl:max-w-7xl">
       <section className="max-w-3xl">
         <p className="meta mb-6">Confabulatorium · est. 2026</p>
         <h1 className="text-display font-serif">
