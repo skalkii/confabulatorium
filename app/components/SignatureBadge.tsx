@@ -5,10 +5,10 @@ interface Props {
 }
 
 function bandColor(score: number): string {
-  if (score <= 0.2) return "var(--color-faded)";
-  if (score <= 0.5) return "#8a7a44";
-  if (score <= 0.8) return "var(--color-rust)";
-  return "#5b1a0a";
+  if (score <= 0.2) return "var(--band-0)";
+  if (score <= 0.5) return "var(--band-1)";
+  if (score <= 0.8) return "var(--band-2)";
+  return "var(--band-3)";
 }
 
 export function SignatureBadge({ score, interpretation, size = "sm" }: Props) {
@@ -17,7 +17,7 @@ export function SignatureBadge({ score, interpretation, size = "sm" }: Props) {
       <span className="meta inline-flex items-center gap-2">
         <span
           aria-hidden
-          className="inline-block size-1.5 animate-pulse rounded-full bg-[color:var(--color-faded)]"
+          className="inline-block size-1.5 animate-pulse rounded-full bg-faded"
         />
         Computing signature…
       </span>
@@ -26,21 +26,48 @@ export function SignatureBadge({ score, interpretation, size = "sm" }: Props) {
 
   const label = score.toFixed(2);
   const color = bandColor(score);
+  const plotX = Math.min(100, Math.max(0, score * 100));
 
   if (size === "lg") {
     return (
-      <div className="flex flex-col items-start gap-1">
-        <span className="meta">Dream Signature</span>
-        <span
-          className="font-serif text-6xl leading-none tracking-tight"
-          style={{ color }}
-        >
-          {label}
-        </span>
-        {interpretation ? (
-          <span className="mt-2 max-w-sm text-sm italic text-[color:var(--color-faded)]">
-            {interpretation}
+      <div className="flex flex-col gap-4">
+        <div className="flex items-baseline gap-4">
+          <span className="meta">Dream Signature</span>
+          <span
+            className="onum font-serif text-[3rem] leading-none tracking-tight md:text-[3.75rem]"
+            style={{ color }}
+          >
+            {label}
           </span>
+        </div>
+
+        {/* 0..1 axis */}
+        <div className="max-w-sm">
+          <div className="relative h-px w-full bg-rule" role="img" aria-label={`Signature ${label} on 0–1 scale`}>
+            {[0.25, 0.5, 0.75].map((t) => (
+              <span
+                key={t}
+                aria-hidden
+                className="absolute -top-1 h-2 w-px bg-rule"
+                style={{ left: `${t * 100}%` }}
+              />
+            ))}
+            <span
+              aria-hidden
+              className="absolute -top-[5px] block size-[11px] -translate-x-1/2 rounded-full ring-2 ring-parchment"
+              style={{ left: `${plotX}%`, background: color }}
+            />
+          </div>
+          <div className="meta mt-2 flex justify-between">
+            <span>0.00</span>
+            <span>1.00</span>
+          </div>
+        </div>
+
+        {interpretation ? (
+          <p className="max-w-sm text-small italic text-faded">
+            {interpretation}
+          </p>
         ) : null}
       </div>
     );
@@ -48,7 +75,7 @@ export function SignatureBadge({ score, interpretation, size = "sm" }: Props) {
 
   return (
     <span
-      className="meta inline-flex items-center gap-2"
+      className="meta inline-flex items-center gap-2 tnum"
       title={interpretation ?? undefined}
     >
       <span

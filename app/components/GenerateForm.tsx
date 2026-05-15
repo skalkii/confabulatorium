@@ -46,7 +46,6 @@ export function GenerateForm() {
         return;
       }
       setPhase("crossref");
-      // brief beat so the staged copy lands before nav
       await new Promise((r) => setTimeout(r, 600));
       setPhase("scoring");
       await new Promise((r) => setTimeout(r, 400));
@@ -61,36 +60,38 @@ export function GenerateForm() {
 
   return (
     <form onSubmit={submit} className="space-y-5">
-      <label className="block">
-        <span className="meta mb-2 block">Fragment</span>
-        <textarea
-          value={fragment}
-          onChange={(e) => setFragment(e.target.value)}
-          placeholder={placeholder}
-          rows={3}
-          maxLength={280}
-          disabled={busy}
-          required
-          minLength={3}
-          className="w-full resize-none border-b-2 border-[color:var(--color-rule)] bg-transparent px-0 py-3 font-serif text-2xl leading-snug placeholder:italic placeholder:text-[color:var(--color-faded)]/60 focus:border-[color:var(--color-rust)] focus:outline-none"
-        />
-      </label>
-
-      <div className="flex items-center justify-between">
-        <p className="meta">
+      <div className="museum-card px-5 py-5 md:px-7 md:py-6">
+        <label className="block">
+          <span className="meta mb-3 block">Fragment</span>
+          <textarea
+            value={fragment}
+            onChange={(e) => setFragment(e.target.value)}
+            placeholder={placeholder}
+            rows={2}
+            maxLength={280}
+            disabled={busy}
+            required
+            minLength={3}
+            className="w-full resize-none border-b border-rule bg-transparent px-0 pb-3 pt-1 font-serif text-xl leading-snug placeholder:italic placeholder:text-faded/60 focus:border-rust focus:outline-none md:rows-3 md:text-2xl"
+          />
+        </label>
+        <p className="meta tnum mt-3 text-right">
           {fragment.length} / 280
         </p>
+      </div>
+
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
         <button
           type="submit"
           disabled={busy || fragment.trim().length < 3}
-          className="meta border border-[color:var(--color-ink)] bg-[color:var(--color-ink)] px-6 py-3 text-[color:var(--color-parchment)] transition hover:bg-[color:var(--color-rust)] hover:border-[color:var(--color-rust)] disabled:cursor-not-allowed disabled:opacity-50"
+          className="meta w-full border border-ink bg-ink px-6 py-3 text-parchment transition hover:border-rust hover:bg-rust disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
         >
           {busy ? PHASE_COPY[phase as Exclude<Phase, "idle">] : "Generate dream"}
         </button>
       </div>
 
       {error ? (
-        <p className="border-l-2 border-[color:var(--color-rust)] pl-3 text-sm italic text-[color:var(--color-rust)]">
+        <p className="border-l-2 border-rust pl-3 text-small italic text-rust">
           {error}
         </p>
       ) : null}
