@@ -4,13 +4,13 @@ export const serif = EB_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   style: ["normal", "italic"],
-  variable: "--font-serif",
+  variable: "--font-serif-google",
   display: "swap",
 });
 
 export const mono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-mono",
+  variable: "--font-mono-google",
   display: "swap",
 });
