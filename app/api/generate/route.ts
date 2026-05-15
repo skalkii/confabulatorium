@@ -3,7 +3,7 @@ import { after } from "next/server";
 import { z } from "zod";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { generateConfabulation } from "@/lib/generate";
-import { braveSearch } from "@/lib/search/brave";
+import { webSearch } from "@/lib/search/duckduckgo";
 import {
   findByFragmentHash,
   hashFragment,
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
   }
 
   // Parallel: search
-  const search = await braveSearch(fragment, { count: 5 });
+  const search = await webSearch(fragment, { count: 5 });
 
   const slug = newSlug();
   const dream = await insertDream({

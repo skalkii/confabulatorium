@@ -8,7 +8,7 @@ create table if not exists dreams (
   fragment_hash text not null,                -- sha256 of normalized fragment, for cache lookup
   confabulation text not null,                -- LLM-generated body
   metadata jsonb,                             -- invented dates / sources / witnesses
-  search_snippets jsonb,                      -- raw Brave Search results
+  search_snippets jsonb,                      -- raw web search results (DuckDuckGo)
   signature numeric(3, 2),                    -- 0.00 to 1.00, null while computing
   signature_explanation text,
   model_used text,

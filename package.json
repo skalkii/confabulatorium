@@ -16,6 +16,7 @@
     "@upstash/ratelimit": "^2.0.7",
     "@upstash/redis": "^1.36.0",
     "@vercel/og": "^0.8.6",
+    "duck-duck-scrape": "^2.2.7",
     "groq-sdk": "^0.34.0",
     "nanoid": "^5.1.10",
     "next": "^15.5.0",
