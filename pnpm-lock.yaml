@@ -38,6 +38,9 @@ importers:
       next:
         specifier: ^15.5.0
         version: 15.5.18(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      next-themes:
+        specifier: ^0.4.6
+        version: 0.4.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       react:
         specifier: ^19.0.0
         version: 19.2.6
@@ -1889,6 +1892,12 @@ packages:
     resolution: {integrity: sha512-jaQyPKKk2YokHrEg+vFDYxXIHTCBgiZwSHOoVx/8V3GIBS8/VN6NdVRmg8q1ERtPkMvmOvebsgga4sAj5hls/w==}
     engines: {node: '>= 4.4.x'}
     hasBin: true
+
+  next-themes@0.4.6:
+    resolution: {integrity: sha512-pZvgD5L0IEvX5/9GWyHMf3m8BKiVQwsCMHfoFosXtXBMnaS0ZnIJ9ST4b4NqLVKDEm8QBxoNNGNaBv2JNF6XNA==}
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
 
   next@15.5.18:
     resolution: {integrity: sha512-eKL8zUJkX9Y5lE+RX/2YJoItVdGlIscyVyboeD9wSpp0PaGqjoA4tTpT2qPqz9ax+5IzGESyLSeZ/RCwbSZ2uQ==}
@@ -4171,6 +4180,11 @@ snapshots:
     dependencies:
       iconv-lite: 0.6.3
       sax: 1.6.0
+
+  next-themes@0.4.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6):
+    dependencies:
+      react: 19.2.6
+      react-dom: 19.2.6(react@19.2.6)
 
   next@15.5.18(react-dom@19.2.6(react@19.2.6))(react@19.2.6):
     dependencies:
