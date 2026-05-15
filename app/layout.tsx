@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SiteNav } from "./components/SiteNav";
+import { serif, mono } from "./fonts";
 
 export const metadata: Metadata = {
   title: {
@@ -25,13 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`${serif.variable} ${mono.variable}`}>
       <body className="min-h-screen antialiased">
         <SiteNav />
         {children}

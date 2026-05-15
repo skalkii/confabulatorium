@@ -8,9 +8,9 @@
   --color-card: #faf6ee;
   --color-rule: #d9cfbe;
 
-  --font-display: "EB Garamond", "Times New Roman", serif;
-  --font-body: "EB Garamond", "Times New Roman", serif;
-  --font-meta: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: var(--font-serif), "EB Garamond", "Times New Roman", serif;
+  --font-body: var(--font-serif), "EB Garamond", "Times New Roman", serif;
+  --font-meta: var(--font-mono), ui-monospace, monospace;
 }
 
 html,
