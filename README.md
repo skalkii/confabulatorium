@@ -173,4 +173,4 @@ If anything goes wrong during the Vercel step, their own guide is the right plac
 
 ## License
 
-To be decided by the author.
+MIT — see [LICENSE](LICENSE). The code is open; the seeded archive content is the project's own.
