@@ -29,4 +29,13 @@ export const FRAGMENTS: readonly string[] = [
   "the moth-collector August Pell",
   "the apothecary of Pale Lane",
   "the cloud-architects of Old Brindisi",
+  // Real-but-obscure: the model should retrieve at least partially.
+  // These pull the archive's signature distribution down out of the
+  // pure-dream tier so /archive?sort=signature shows the full range.
+  "the Voynich Manuscript",
+  "the Antikythera mechanism",
+  "the Dancing Plague of 1518",
+  "the Tunguska event of 1908",
+  "the cargo cults of Vanuatu",
+  "the Codex Seraphinianus",
 ];
