@@ -68,11 +68,13 @@
    Component-internal tokens
    ============================================================ */
 :root {
-  /* Signature bands — light */
-  --band-0: #736959;
-  --band-1: #a88b3a;
-  --band-2: #9a3f1f;
-  --band-3: #5c1a08;
+  /* Signature bands — light. Tuned so every band hits ≥4.5:1 against
+     parchment (#f2ecdf) for AA small-text compliance, since these
+     colours appear in both small tab dots and the large 60px numeral. */
+  --band-0: #736959; /* 4.58:1 — retrieval, faded ink */
+  --band-1: #7e6322; /* 4.83:1 — ochre, partial echo (was #a88b3a 2.78:1) */
+  --band-2: #9a3f1f; /* 5.75:1 — rust, mostly invented */
+  --band-3: #5c1a08; /* 11.11:1 — iron-gall, pure confabulation */
 }
 
 .dark {
