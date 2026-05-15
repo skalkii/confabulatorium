@@ -73,8 +73,11 @@ async function seedOne(fragment: string): Promise<Summary> {
     safety_score: null,
   });
 
+  // Compute signature whenever search succeeded — empty snippets means
+  // no echo in waking record, which is a real signal (signature -> 1.0),
+  // not a missing-data case. Only skip when the search itself failed.
   const [sig, safety] = await Promise.all([
-    search.ok && search.snippets.length > 0
+    search.ok
       ? computeSignature(conf.text, search.snippets).catch(() => null)
       : Promise.resolve(null),
     reviewSafety(fragment, conf.text),

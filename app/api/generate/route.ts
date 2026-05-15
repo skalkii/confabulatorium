@@ -104,8 +104,11 @@ export async function POST(req: Request) {
   // Background: signature + safety review, then publish to archive
   after(async () => {
     try {
+      // Compute signature whenever search succeeded — empty snippets means
+      // no echo in waking record (signature -> 1.0), not a missing-data
+      // case. Only skip when the search call itself failed.
       const [signature, safety] = await Promise.all([
-        search.ok && search.snippets.length > 0
+        search.ok
           ? computeSignature(conf.text, search.snippets)
           : Promise.resolve(null),
         reviewSafety(fragment, conf.text),
