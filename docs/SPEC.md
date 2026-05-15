@@ -34,7 +34,7 @@ The reader leaves with a felt understanding: this is what it looks like when a s
 | Styling | **Tailwind CSS v4** | Fast iteration | — |
 | LLM | **Google Gemini 2.5 Flash** via Gemini API | Best free tier in 2026; ample daily quota | Yes — generous free tier |
 | Backup LLM | **Groq (Llama 3.3 70B)** | Backup if Gemini quota hits; very fast | Yes |
-| Web search (for grounding comparison) | **Brave Search API** | Clean API, generous free tier | 2,000 queries/month free |
+| Web search (for grounding comparison) | **DuckDuckGo** via `duck-duck-scrape` | No key, no quota; replaces Brave (Brave dropped free tier in 2026) | Yes — no card required |
 | Database | **Supabase (Postgres)** | Free tier covers thousands of entries | 500MB free |
 | Auth (optional) | **Supabase Auth** | Only if you want user accounts | Free |
 | Deployment | **Vercel** | Free tier handles this easily | Yes |
@@ -147,7 +147,7 @@ confabulatorium/
 │   │   ├── groq.ts                     # Backup
 │   │   └── prompts.ts                  # All system prompts in one place
 │   ├── search/
-│   │   └── brave.ts                    # Brave Search client
+│   │   └── duckduckgo.ts               # DuckDuckGo client (no key)
 │   ├── signature/
 │   │   ├── extract.ts                  # Claim extraction
 │   │   ├── compare.ts                  # Embedding comparison
@@ -171,7 +171,7 @@ create table dreams (
   fragment text not null,                     -- user's original input
   confabulation text not null,                -- LLM-generated body
   metadata jsonb,                             -- invented dates/sources/etc.
-  search_snippets jsonb,                      -- raw Brave Search results
+  search_snippets jsonb,                      -- raw web search results (DuckDuckGo)
   signature numeric(3, 2),                    -- 0.00 to 1.00
   signature_explanation text,
   model_used text,
@@ -232,7 +232,7 @@ Text: """{{CONFABULATION}}"""
 
 ### Failure modes
 - LLM quota exceeded → fall back to Groq automatically. If both fail, show a graceful "the archive is sleeping" message rather than an error.
-- Brave Search fails → still show the confabulation; mark signature as "unavailable."
+- Web search fails (DDG layout change, network error) → still show the confabulation; mark signature as "unavailable."
 - LLM returns refusal or safety block → catch, show a curated default explaining the request was filtered, and *do not* retry endlessly.
 
 ### Content safety
@@ -253,7 +253,7 @@ Text: """{{CONFABULATION}}"""
 ## 10. Build Steps (Suggested Order)
 
 1. Scaffold Next.js project, configure Tailwind, set up Supabase project and table.
-2. Get API keys: Gemini, Brave Search, Supabase, Upstash. Put in `.env.local`. Commit `.env.example`.
+2. Get API keys: Gemini, Supabase, Upstash. Put in `.env.local`. Commit `.env.example`. (Web search uses DuckDuckGo — no key.)
 3. Build the generation API route end-to-end with a hardcoded fragment. Confirm a dream gets written to the DB.
 4. Build the `[slug]` entry page to display from DB.
 5. Build the generation form (`/dream/new`) and wire it to the API.
@@ -298,12 +298,12 @@ Text: """{{CONFABULATION}}"""
 
 ## 14. Cost Sanity Check (at scale)
 
-| Traffic level | Gemini cost | Brave cost | Supabase cost | Vercel cost | **Total/mo** |
+| Traffic level | Gemini cost | DDG cost | Supabase cost | Vercel cost | **Total/mo** |
 |---|---|---|---|---|---|
 | 100 dreams/mo | $0 (free tier) | $0 | $0 | $0 | **$0** |
-| 1,000 dreams/mo | $0 (free tier) | $0 (free tier) | $0 | $0 | **$0** |
-| 10,000 dreams/mo | ~$5 (over free) | ~$5 (over free) | $0 | $0 | **~$10** |
-| 100,000 dreams/mo | ~$50 | ~$50 | $25 (Pro) | $20 (Pro) | **~$145** |
+| 1,000 dreams/mo | $0 (free tier) | $0 | $0 | $0 | **$0** |
+| 10,000 dreams/mo | ~$5 (over free) | $0 | $0 | $0 | **~$5** |
+| 100,000 dreams/mo | ~$50 | $0 (rate-limit risk) | $25 (Pro) | $20 (Pro) | **~$95** |
 
 If usage gets to "100K dreams/mo" you've gone viral, post on HN, and add a "support the project" link. Not Claude Code's problem.
 

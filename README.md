@@ -14,7 +14,7 @@ The full philosophical / design spec lives at [`docs/SPEC.md`](docs/SPEC.md).
 - **Tailwind v4** (CSS-first config)
 - **Supabase** Postgres + RLS
 - **Gemini 2.5 Flash** (primary LLM) with **Groq Llama 3.3 70B** fallback
-- **Brave Search API** for reality cross-reference
+- **DuckDuckGo** (via `duck-duck-scrape`, no key) for reality cross-reference
 - **Upstash Redis** for IP rate-limiting
 - **Transformers.js** (`Xenova/all-MiniLM-L6-v2`) for free in-process embeddings
 
@@ -38,7 +38,6 @@ All providers below have a free tier sufficient for low/medium traffic.
 |---|---|---|
 | **Gemini** | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) | Free tier; pick "Get API key" |
 | **Groq** | [console.groq.com/keys](https://console.groq.com/keys) | Free fallback; very fast |
-| **Brave Search** | [api.search.brave.com](https://api.search.brave.com/) | 2,000 queries/mo free; requires card for verification but free plan does not charge |
 | **Supabase** | [supabase.com/dashboard](https://supabase.com/dashboard) | New project; copy URL + anon key + service-role key from Project Settings → API |
 | **Upstash Redis** | [console.upstash.com](https://console.upstash.com) | Create a Redis DB; copy REST URL + REST token |
 
@@ -76,7 +75,7 @@ pnpm lint
 ```
 app/
 ├── api/
-│   ├── generate/   POST → validate → rate-limit → cache → LLM → Brave →
+│   ├── generate/   POST → validate → rate-limit → cache → LLM → DDG search →
 │   │               insert (signature=null, is_reviewed=false) →
 │   │               background after() runs signature + safety → flip is_reviewed
 │   ├── signature/  POST { slug } → synchronous signature recompute (seed/debug)
@@ -88,7 +87,7 @@ app/
 └── about/          Philosophical essay placeholder
 lib/
 ├── llm/            gemini, groq, prompts, unified llmGenerate() with fallback
-├── search/brave.ts Graceful-failure Brave client
+├── search/duckduckgo.ts Graceful-failure DDG client (duck-duck-scrape)
 ├── signature/      extract (LLM) → compare (MiniLM cosine) → score
 ├── db/             Supabase service-role client + dreams CRUD
 ├── rate-limit.ts   Upstash 1/min/IP, fail-open if unconfigured
@@ -97,7 +96,7 @@ lib/
 └── env.ts          zod-validated env + per-service has* helpers
 ```
 
-The Dream Signature pipeline is the philosophical payload — see spec section 5. It's `1 − (proportion of LLM-extracted claims with cosine ≥ 0.7 against any Brave snippet)`. Empty claim list or no reality snippets ⇒ signature 1.00.
+The Dream Signature pipeline is the philosophical payload — see spec section 5. It's `1 − (proportion of LLM-extracted claims with cosine ≥ 0.7 against any web search snippet)`. Empty claim list or no reality snippets ⇒ signature 1.00.
 
 ---
 
@@ -117,7 +116,7 @@ The signature compute runs the MiniLM model via `@huggingface/transformers`. Fir
 
 - **Cache aggressively.** Same fragment hash returns the cached dream — never regenerated. The first writing is canonical (§13 default).
 - **Lazy signature.** Confabulation lands first; signature + safety review run in `after()`. Archive only surfaces reviewed entries.
-- **Fail open on Brave; fail soft on LLMs.** Brave outage → signature unavailable. Gemini quota → Groq. Both LLMs fail → "the archive is sleeping" copy.
+- **Fail open on web search; fail soft on LLMs.** DDG scrape breaks → signature unavailable, entry still publishes. Gemini quota → Groq. Both LLMs fail → "the archive is sleeping" copy.
 - **Refuse before generating** for: real living people, sexual content, content involving minors, harm instructions. Detection is prompt-level (`REFUSE: real_person | unsafe | empty`) plus the 1–5 safety rating gate.
 
 ---
