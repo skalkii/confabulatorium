@@ -60,7 +60,11 @@ export default async function ArchivePage({ searchParams }: PageProps) {
           .
         </p>
       ) : (
-        <div className="grid gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+        <section aria-labelledby="archive-entries">
+          <h2 id="archive-entries" className="sr-only">
+            Entries
+          </h2>
+          <div className="grid gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
           {dreams.map((d, i) => (
             <DreamCard
               key={d.slug}
@@ -72,7 +76,8 @@ export default async function ArchivePage({ searchParams }: PageProps) {
               catalogueNo={i + 1}
             />
           ))}
-        </div>
+          </div>
+        </section>
       )}
     </main>
   );

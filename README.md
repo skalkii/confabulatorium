@@ -157,6 +157,15 @@ Gemini's free tier caps requests per minute. The app will automatically retry wi
 **The very first dream takes around 30 seconds.**
 This is normal. The app uses a small AI model (called MiniLM) to compare the machine's invention against the real web results, and the first time it runs, that model downloads itself (about 25 MB) into a cache folder. Every dream after the first will be much faster.
 
+**Every dream's signature comes back at 1.00.**
+DuckDuckGo briefly blocks IPs that make many search requests in a short window ("DDG detected an anomaly in the request"). When this happens, the app stores zero search snippets, which the signature math reads as "no echo found" → 1.00. Wait 10–15 minutes for DDG to cool down, then run:
+
+```
+pnpm seed:backfill --refresh-search
+```
+
+The `--refresh-search` flag re-tries DuckDuckGo for any entry whose snippets are currently empty, and recomputes the signature once real results come back.
+
 **The page says "the archive is sleeping".**
 Both Gemini and Groq failed at the same time. Check that both keys in `.env.local` are pasted correctly with no extra spaces, then restart `pnpm dev`. Restarting the dev server is required any time you change `.env.local`.
 
