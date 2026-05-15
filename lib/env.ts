@@ -1,7 +1,22 @@
 import { z } from "zod";
 
+/**
+ * Accept either a bare hostname ("confabulatorium.vercel.app") or a
+ * full URL — Vercel's env-var UI silently drops the protocol when
+ * users copy-paste the assigned domain. Normalize before validating.
+ */
+const siteUrlSchema = z
+  .string()
+  .default("http://localhost:3000")
+  .transform((v) => {
+    const t = v.trim();
+    const withProto = /^https?:\/\//i.test(t) ? t : `https://${t}`;
+    return withProto.replace(/\/+$/, "");
+  })
+  .pipe(z.string().url());
+
 const schema = z.object({
-  NEXT_PUBLIC_SITE_URL: z.string().url().default("http://localhost:3000"),
+  NEXT_PUBLIC_SITE_URL: siteUrlSchema,
 
   GEMINI_API_KEY: z.string().min(1).optional(),
   GROQ_API_KEY: z.string().min(1).optional(),

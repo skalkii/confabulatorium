@@ -5,6 +5,7 @@ import { SiteNav } from "./components/SiteNav";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Mark } from "./components/Mark";
 import { serif, mono } from "./fonts";
+import { siteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: {
@@ -13,9 +14,7 @@ export const metadata: Metadata = {
   },
   description:
     "An archive of what the machine remembers that never happened. LLM confabulations presented as dreams, cross-referenced with the waking record.",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  ),
+  metadataBase: new URL(siteUrl()),
   openGraph: {
     type: "website",
     title: "Confabulatorium",
