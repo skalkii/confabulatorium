@@ -1,14 +1,25 @@
-import { pipeline, type FeatureExtractionPipeline } from "@huggingface/transformers";
+// @huggingface/transformers's pipeline() type is a deep tagged union that
+// blows up TS inference (TS2590) when referenced from a wrapper module.
+// We require it dynamically and treat it as a loose callable — the runtime
+// behavior is unchanged and the function shape is stable across 3.x.
+type Tensor = { tolist(): number[][] };
+type Extractor = (
+  texts: string[],
+  opts: { pooling: "mean"; normalize: boolean },
+) => Promise<Tensor>;
 
 const MODEL_ID = "Xenova/all-MiniLM-L6-v2";
 
-let extractorPromise: Promise<FeatureExtractionPipeline> | null = null;
+let extractorPromise: Promise<Extractor> | null = null;
 
-function getExtractor(): Promise<FeatureExtractionPipeline> {
+async function getExtractor(): Promise<Extractor> {
   if (!extractorPromise) {
-    extractorPromise = pipeline("feature-extraction", MODEL_ID, {
-      dtype: "fp32",
-    }) as Promise<FeatureExtractionPipeline>;
+    extractorPromise = (async () => {
+      const mod = await import("@huggingface/transformers");
+      return (await mod.pipeline("feature-extraction", MODEL_ID, {
+        dtype: "fp32",
+      })) as unknown as Extractor;
+    })();
   }
   return extractorPromise;
 }
@@ -17,7 +28,7 @@ async function embed(texts: string[]): Promise<number[][]> {
   if (texts.length === 0) return [];
   const extractor = await getExtractor();
   const output = await extractor(texts, { pooling: "mean", normalize: true });
-  return output.tolist() as number[][];
+  return output.tolist();
 }
 
 function cosine(a: number[], b: number[]): number {
